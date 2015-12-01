@@ -1,0 +1,29 @@
+<div class="container">
+    <ul class="nav nav-tabs" role="tablist">
+      <li class="active"><a href="#itemfile" role="tab" data-toggle="tab">Itemfile</a></li>
+      <li><a href="#product" role="tab" data-toggle="tab">Product</a></li>
+      <li><a href="#price" role="tab" data-toggle="tab">Price</a></li>
+    </ul>
+
+    <div class="tab-content">
+      <div class="tab-pane fade active in" id="itemfile">
+        <%= render partial: "edit_table", locals: {readonly: @readonly, product: @barcode.itemfile} %>
+      </div>
+      <div class="tab-pane fade" id="import">
+        <%= react_component('Upload', label: 'John') %>
+      </div>
+    </div>
+
+    <div class="tab-content">
+      <div class="tab-pane fade" id="product">
+        <%= render partial: "edit_table", locals: {readonly: @readonly, product: @barcode.product} if @barcode.product != nil %>
+      </div>
+    </div>
+
+    <div class="tab-content">
+      <div class="tab-pane fade" id="price">
+        <%= render partial: "edit_table", locals: {readonly: @readonly, product: @barcode.itemfile} %>
+      </div>
+    </div>
+
+</div>

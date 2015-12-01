@@ -1,0 +1,18 @@
+<%= form_for(@barcode) do |f| %>
+  <% if @barcode.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@barcode.errors.count, "error") %> prohibited this barcode from being saved:</h2>
+
+      <ul>
+      <% @barcode.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="actions">
+    <%= f.text_field :id%>
+    <%= f.submit %>
+  </div>
+<% end %>

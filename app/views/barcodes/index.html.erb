@@ -1,0 +1,22 @@
+<h2>Total:<%=@count%></h2>
+<table class='table table-striped table-condensed'>
+  <thead>
+    <tr>
+      <th>Barcode</th>
+      <th>Supplier Stock Number</th>
+      <th>Item Description</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @barcodes.each do |barcode| %>
+      <tr>
+        <td><%= link_to barcode.id, barcode %></td>
+        <td><%= link_to barcode.itemfile.Supplier_Stock_Number, barcode %></td>
+        <td><%= link_to barcode.itemfile.Item_Description_1, barcode %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<hr/>
+<%= react_component('Upload', label: 'John') %>

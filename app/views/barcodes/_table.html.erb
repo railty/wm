@@ -1,0 +1,12 @@
+<table class='table table-striped table-condensed'>
+<tr>
+  <th colspan='2'><%=product.class.to_s.gsub('Product', 'Product')%></th>
+</tr>
+
+<% product.class.column_names.each do |cn| %>
+  <tr>
+    <td><%= cn %></td>
+    <td><%= product[cn] %></td>
+  </tr>
+<% end %>
+</table>
