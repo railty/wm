@@ -9,6 +9,25 @@ class Upload extends React.Component {
   }
   upload(){
     this.setState({uploading: true});
+
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", '/barcodes/import.json', true);
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState == 4 && xhr.status == 200) {
+          var data = JSON.parse(xhr.responseText);
+          var msg = 'itemfile created: ' + data.created + ', updated: ' + data.updated;
+          this.setState({msg: msg, uploading: false});
+        }
+    }.bind(this);
+
+    var fd = new FormData();
+    fd.append(this.props.tokenName, this.props.token);
+    fd.append("records", JSON.stringify(this.state.records));
+    xhr.send(fd);
+  }
+
+  uploadByAjax(){
+    this.setState({uploading: true});
     $.ajax({
       url: '/barcodes/import.json',
       type: "POST",
@@ -25,6 +44,7 @@ class Upload extends React.Component {
       }.bind(this)
     });
   }
+
   onChange(e){
     var f = e.target.files[0];
     var reader = new FileReader();

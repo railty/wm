@@ -14,7 +14,7 @@ class BarcodesController < ApplicationController
   end
 
   def import
-    @result = Barcode.loadData(params['records'])
+    @result = Barcode.loadData(JSON.parse(params['records']))
     respond_to do |format|
       format.json
     end

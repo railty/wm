@@ -20,4 +20,4 @@
 </table>
 <hr/>
 
-<%= react_component('Upload', label: 'John') %>
+<%= react_component('Upload', tokenName: request_forgery_protection_token, token: form_authenticity_token)%>

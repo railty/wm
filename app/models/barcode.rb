@@ -16,18 +16,19 @@ class Barcode < ActiveRecord::Base
     ct_create = 0
     ct_update = 0
     errors = []
-    data.each do |n1, v1|
+
+    data.each do |record|
       attrs = {}
       klss = []
-      v1.each do |n2, v2|
-        fd = fieldlize(v2['n'])
+      record.each do |cell|
+        fd = fieldlize(cell['n'])
         if fd == 'UPC_GTIN' then
           klss = [{'class_name'=>'Itemfile', 'key'=>fd}]
         end
         if fd == 'Prod_Num' then
           klss = [{'class_name'=>'Product', 'key'=>fd}, {'class_name'=>'Price', 'key'=>'ProdNum'}]
         end
-        attrs[fd] = v2['v']
+        attrs[fd] = cell['v']
       end
 
 
@@ -44,6 +45,7 @@ class Barcode < ActiveRecord::Base
         if (inst == nil) then
           inst = klass.new
           ct_create = ct_create + 1
+          debugger
         else
           ct_update = ct_update + 1
         end
