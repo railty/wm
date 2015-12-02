@@ -4,8 +4,7 @@ class BarcodesController < ApplicationController
   # GET /barcodes
   # GET /barcodes.json
   def index
-    @count = Barcode.all.length
-    @barcodes = Barcode.all.limit(2)
+    @barcodes = Barcode.paginate(:page => params[:page]).order('id')
   end
 
   # GET /barcodes/1

@@ -65,12 +65,18 @@ class Upload extends React.Component {
               //seems to be a bug in xlsx js,
               //the excel spec says that imft = 0eh means should display as m/d/yy, which is exactly js-xlsx does
               //however, both excel and libreoffice display it as mm/dd/yyyy
-              if (value.t == 'n' && ((value.XF.ifmt == 14)||(value.XF.ifmt == 186))){
-                //string manupulation or
-                text = value.w.replace(/(\d+)\/(\d+)\/(\d+)/, '20$3-$1-$2')
-                //parse date and re-format
-                //value = new Date(Date.parse(value.w)).toISOString().slice(0,10).replace(/-/g,"/");
+              if (value.t == 'n' && (value.XF) && (value.XF.ifmt)){
+                if ((value.XF.ifmt == 14)||(value.XF.ifmt == 186)){
+                  //string manupulation or
+                  text = value.w.replace(/(\d+)\/(\d+)\/(\d+)/, '20$3-$1-$2')
+                  //parse date and re-format
+                  //value = new Date(Date.parse(value.w)).toISOString().slice(0,10).replace(/-/g,"/");
+                }
               }
+            }
+
+            if ((name.v=='Item Effective Date' || name.v=='Item Expiration Date')&&(text.length==8)){
+              text = text.replace(/(\d+)\/(\d+)\/(\d+)/, '20$3-$1-$2');
             }
             items.push({n:name.v, v:text});
           }

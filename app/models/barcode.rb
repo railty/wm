@@ -15,6 +15,7 @@ class Barcode < ActiveRecord::Base
   def self.loadData(data)
     ct_create = 0
     ct_update = 0
+    errors = []
     data.each do |n1, v1|
       attrs = {}
       klss = []
@@ -46,16 +47,31 @@ class Barcode < ActiveRecord::Base
         else
           ct_update = ct_update + 1
         end
+        begin
+          inst.update(attrs)
+          inst.save
+        rescue Exception => e
+          attrs.each do |k, v|
+            next if k == 'UPC_GTIN'
+            trial = kls['class_name'].constantize.send(:find_by, {kls['key'] => attrs[kls['key']]})
+            trial = klass.new if (trial == nil)
+            trial_attrs = {'UPC_GTIN'=>attrs['UPC_GTIN'], k => v}
+            begin
+              trial.update(trial_attrs)
+            rescue Exception => e2
+              debugger
+            end
+          end
+          debugger
+          errors << "error: #{attrs['UPC_GTIN']} #{e.message}"
+        end
 
-        inst.update(attrs)
-        inst.save
-
-	barcode = Barcode.find_by({'id'=>attrs['UPC_GTIN']})
-	if barcode ==nil then
-		barcode = Barcode.new
-		barcode.id= attrs['UPC_GTIN']
-		barcode.save
-	end 
+      	barcode = Barcode.find_by({'id'=>attrs['UPC_GTIN']})
+      	if barcode ==nil then
+      		barcode = Barcode.new
+      		barcode.id= attrs['UPC_GTIN']
+      		barcode.save
+      	end
 
       end
 
@@ -67,7 +83,7 @@ class Barcode < ActiveRecord::Base
 #        barcode.save
 #      end
     end
-    return {'created' => ct_create, 'updated' => ct_update}
+    return {'created' => ct_create, 'updated' => ct_update, 'errors' => errors}
   end
 
 end
