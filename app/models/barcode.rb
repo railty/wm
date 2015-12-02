@@ -21,7 +21,7 @@ class Barcode < ActiveRecord::Base
       v1.each do |n2, v2|
         fd = fieldlize(v2['n'])
         if fd == 'UPC_GTIN' then
-          klss = [{'class_name'=>'Itemfile', 'key'=>fd}, {'class_name'=>'Barcode', 'key'=>'id'}]
+          klss = [{'class_name'=>'Itemfile', 'key'=>fd}]
         end
         if fd == 'Prod_Num' then
           klss = [{'class_name'=>'Product', 'key'=>fd}, {'class_name'=>'Price', 'key'=>'ProdNum'}]
@@ -49,6 +49,14 @@ class Barcode < ActiveRecord::Base
 
         inst.update(attrs)
         inst.save
+
+	barcode = Barcode.find_by({'id'=>attrs['UPC_GTIN']})
+	if barcode ==nil then
+		barcode = Barcode.new
+		barcode.id= attrs['UPC_GTIN']
+		barcode.save
+	end 
+
       end
 
 
