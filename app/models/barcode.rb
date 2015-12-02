@@ -21,7 +21,7 @@ class Barcode < ActiveRecord::Base
       v1.each do |n2, v2|
         fd = fieldlize(v2['n'])
         if fd == 'UPC_GTIN' then
-          klss = [{'class_name'=>'Itemfile', 'key'=>fd}]
+          klss = [{'class_name'=>'Itemfile', 'key'=>fd}, {'class_name'=>'Barcode', 'key'=>'id'}]
         end
         if fd == 'Prod_Num' then
           klss = [{'class_name'=>'Product', 'key'=>fd}, {'class_name'=>'Price', 'key'=>'ProdNum'}]
