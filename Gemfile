@@ -36,6 +36,7 @@ gem 'react-rails'
 
 # Use Capistrano for deployment
 gem 'capistrano-rails', group: :development
+gem 'capistrano-passenger', group: :development
 
 # Use debugger
 gem 'byebug', group: [:development, :test]
