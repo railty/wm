@@ -11,9 +11,9 @@
   <tbody>
     <% @barcodes.each do |barcode| %>
       <tr>
-        <td><%= link_to barcode.id, barcode %></td>
-        <td><%= link_to barcode.itemfile.Supplier_Stock_Number, barcode %></td>
-        <td><%= link_to barcode.itemfile.Item_Description_1, barcode %></td>
+        <td><%= barcode.id %></td>
+        <td><%= barcode.itemfile.Supplier_Stock_Number %></td>
+        <td><%= barcode.itemfile.Item_Description_1 %></td>
       </tr>
     <% end %>
   </tbody>
