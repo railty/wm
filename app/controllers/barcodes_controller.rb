@@ -4,7 +4,7 @@ class BarcodesController < ApplicationController
   # GET /barcodes
   # GET /barcodes.json
   def index
-    @barcodes = Barcode.paginate(:page => params[:page]).order('id')
+    @barcodes = Barcode.paginate(:page => params[:page], :per_page => 100).order('id')
   end
 
   # GET /barcodes/1
