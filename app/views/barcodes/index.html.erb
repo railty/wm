@@ -3,8 +3,8 @@
   <thead>
     <tr>
       <th>Barcode</th>
-      <th>Supplier Stock Number</th>
       <th>Item Description</th>
+      <th>Item Price</th>
     </tr>
   </thead>
 
@@ -12,8 +12,8 @@
     <% @barcodes.each do |barcode| %>
       <tr>
         <td><%= barcode.id %></td>
-        <td><%= barcode.itemfile.Supplier_Stock_Number %></td>
         <td><%= barcode.itemfile.Item_Description_1 %></td>
+        <td><%= barcode.itemfile.Base_Unit_Retail %></td>
       </tr>
     <% end %>
   </tbody>
