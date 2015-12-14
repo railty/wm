@@ -18,3 +18,4 @@
 bower_components
 .byebug_history
 .DS_Store
+__pycache__
