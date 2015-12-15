@@ -31,28 +31,16 @@ def rgb(r, g, b):
 def getColor(row):
     red = rgb(255, 0, 0)
     green = rgb(0, 255, 0)
-    if row.sheet.name=='ALP Worksheet':
-        try:
-            g = float(row[6].value)
-        except:
-            g = 0
+    try:
+        g = float(row[6].value)
+    except:
+        g = 0
 
-        try:
-            w = float(row[22].value)
-        except:
-            w = 0
-        return red if g < w else green
-    if row.sheet.name=='Shared Worksheet':
-        try:
-            g = float(row[6].value)
-        except:
-            g = 0
-
-        try:
-            x = float(row[23].value)
-        except:
-            x = 0
-        return red if g < x else green
+    try:
+        w = float(row[22].value)
+    except:
+        w = 0
+    return red if g < w else green
 
 headers, items = loadData('week47.txt')
 #print(items)
@@ -109,7 +97,7 @@ for sheet, worksheet in {'Al Premium Specific Items': 'ALP Worksheet', 'Shared I
 
         iRow = iRow + 1
 
-#pdb.set_trace()
+pdb.set_trace()
 doc.save('worksheet 47.xlsx', pyoo.FILTER_EXCEL_2007)
 doc.close()
 subprocess.call("kill `ps|grep soffice.bin| awk '{print $1}'`", shell=True)
