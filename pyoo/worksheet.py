@@ -4,7 +4,7 @@ import time
 import pdb
 import pyoo
 
-def load_data(filename):
+def loadData(filename):
     items = {}
     in_file = open(filename, "rt")
     in_line = in_file.readline()
@@ -25,7 +25,36 @@ def load_data(filename):
     in_file.close()
     return (headers, items)
 
-headers, items = load_data('week47.txt')
+def rgb(r, g, b):
+    return 256*(256*r+g)+b
+
+def getColor(row):
+    red = rgb(255, 0, 0)
+    green = rgb(0, 255, 0)
+    if row.sheet.name=='ALP Worksheet':
+        try:
+            g = float(row[6].value)
+        except:
+            g = 0
+
+        try:
+            w = float(row[22].value)
+        except:
+            w = 0
+        return red if g < w else green
+    if row.sheet.name=='Shared Worksheet':
+        try:
+            g = float(row[6].value)
+        except:
+            g = 0
+
+        try:
+            x = float(row[23].value)
+        except:
+            x = 0
+        return red if g < x else green
+
+headers, items = loadData('week47.txt')
 #print(items)
 
 cmd = 'soffice --accept="socket,host=localhost,port=2002;urp;" --norestore --nologo --nodefault' # --headless
@@ -71,11 +100,16 @@ for sheet, worksheet in {'Al Premium Specific Items': 'ALP Worksheet', 'Shared I
             for header in headers:
                 sheet[iRow, colExtra + i].value = item[header]
                 i = i + 1
+
+            color = getColor(sheet[iRow])
+            i = 0
+            for header in headers:
+                sheet[iRow, colExtra + i].background_color = color
+                i = i + 1
+
         iRow = iRow + 1
 
-doc.save('worksheet 47.xlsx', pyoo.FILTER_EXCEL_2007)
 #pdb.set_trace()
+doc.save('worksheet 47.xlsx', pyoo.FILTER_EXCEL_2007)
 doc.close()
 subprocess.call("kill `ps|grep soffice.bin| awk '{print $1}'`", shell=True)
-
-#p doc.sheets[0][340,14].background_color
